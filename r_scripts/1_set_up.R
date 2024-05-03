@@ -1,5 +1,5 @@
-# L04 Feature Engineering I ----
-# Processing training, creating resamples, missingness & factor EDA
+# Classification Problem ----
+# Processing training, creating resamples
 
 # Load package(s)
 library(tidymodels)
@@ -17,4 +17,5 @@ load(here("data/training_data.rda"))
 set.seed(2468)
 air_bnb_folds <- training_data |>
   vfold_cv(v = 10, repeats = 5, host_is_superhost)
+
 
