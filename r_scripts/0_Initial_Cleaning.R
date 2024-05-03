@@ -54,7 +54,7 @@ cor_matrix |>
   view()
 
 # training data tidy-----
-air_bnb_data_tidy <- air_bnb_data |>
+training_data <- air_bnb_data |>
   mutate(
     ### creating factors -----
     host_response_time = factor(host_response_time),
