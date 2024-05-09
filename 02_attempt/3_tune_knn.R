@@ -1,5 +1,5 @@
-# L04 Feature Engineering I ----
-# Single layer neural net tuning, simple imputation ----
+# Classification Problem - Attempt 2 ----
+# Define and fit Knn model ----
 
 # Load package(s) ----
 library(tidyverse)
@@ -39,39 +39,18 @@ knn_wflow <-
 hardhat::extract_parameter_set_dials(knn_model)
 # change hyperparameter ranges
 knn_params <- parameters(knn_model) |>
-  update(neighbors = neighbors(range = c(1, 10))) 
+  update(neighbors = neighbors(range = c(5, 15))) 
 # build tuning grid
 knn_grid <- grid_regular(knn_params, levels = 5)
 
-# tune/fit workflow/model ----
-tic.clearlog() # clear log
-tic("knn_tune_1: RECIPE 1") # start clock
-
 # fit workflows/models ----
 set.seed(7026)
-knn_tune_1 <- tune_grid(knn_wflow,
+knn_tune_2 <- tune_grid(knn_wflow,
                        air_bnb_folds,
                        grid = knn_grid,
                        control = control_grid(save_workflow = TRUE))
 
-toc(log = TRUE)
-
-# Extract runtime info
-time_log <- tic.log(format = FALSE)
-
-tictoc_knn_1 <- tibble(
-  model = time_log[[1]]$msg,
-  start_time = time_log[[1]]$tic,
-  end_time = time_log[[1]]$toc,
-  runtime = end_time - start_time
-)
 
 # write out results (fitted/trained workflows) ----
-save(knn_tune_1, 
-     file = here("01_attempt/results/knn_tune_1.rda"))
-
-save(
-  tictoc_knn_1,
-  file = here("01_attempt/results/tictoc_knn_1.rda")
-)
-
+save(knn_tune_2, 
+     file = here("02_attempt/results/knn_tune_2.rda"))

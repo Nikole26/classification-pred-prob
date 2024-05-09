@@ -1,4 +1,7 @@
 ## EDA -------------
+
+## libraries
+
 load(here("02_attempt/data/training_data.rda"))
 
 # Skiming thorugh the data-------
@@ -17,3 +20,13 @@ training_data |>
 
 ## No missingness in the target variable 
 ## There is slightly more present of the superhost not being a superhost than one being superhost. 
+
+# Exploring highly correlated variables
+cor_matrix <- training_data |>
+  select (where(is.numeric) | where(is.logical)) |>
+  na.omit() |> 
+  cor() |>
+  as_tibble( ) 
+
+cor_matrix$varl <- 
+  colnames(cor_matrix)

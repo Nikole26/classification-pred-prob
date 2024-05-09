@@ -17,10 +17,10 @@ num.cores <- (detectCores(logical = TRUE)/2)
 registerDoParallel(cores = num.cores)
 
 # load resamples ----
-load(here("data/air_bnb_folds.rda"))
+load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("01_attempt/recipes/recipe_1.rda"))
+load(here("02_attempt/recipes/recipe_2.rda"))
 
 # model specifications ----
 mars_spec <- mars(
@@ -34,7 +34,7 @@ mars_spec <- mars(
 mars_wflow <-
   workflow() |>
   add_model(mars_spec) |>
-  add_recipe(recipe_1)
+  add_recipe(recipe_2)
 
 # hyperparameter tuning values ----
 mars_params <- hardhat::extract_parameter_set_dials(mars_spec) |>
@@ -50,37 +50,16 @@ mars_grid <- grid_regular(
     "prod_degree" = 2)
 )
 
-# tune/fit workflow/model ----
-tic.clearlog() # clear log
-tic("mars_1") # start clock
-
 # tuning code in here
-tune_mars_1 <- tune_grid(
+tune_mars_2 <- tune_grid(
   mars_wflow,
   resamples = air_bnb_folds,
   grid = mars_grid,
   control = control_grid(save_workflow = TRUE)
 )
 
-toc(log = TRUE)
-
-# Extract runtime info
-time_log <- tic.log(format = FALSE)
-
-tictoc_mars_1 <- tibble(
-  model = time_log[[1]]$msg,
-  start_time = time_log[[1]]$tic,
-  end_time = time_log[[1]]$toc,
-  runtime = end_time - start_time
-)
-
 # write out results (fitted/trained workflows & runtime info) ----
 save(
-  tune_mars_1,
-  file = here("01_attempt/results/tune_mars_1.rda")
-)
-
-save(
-  tictoc_mars_1,
-  file = here("01_attempt/results/tictoc_mars_1.rda")
+  tune_mars_2,
+  file = here("02_attempt/results/tune_mars_2.rda")
 )
