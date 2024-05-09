@@ -26,7 +26,7 @@ model_set <-
     "bt_2" = bt_tuned_2
   )
 
-models_table <- model_set |> 
+models_table_2 <- model_set |> 
   collect_metrics() |>
   filter(.metric == "roc_auc") |>
   arrange(desc(mean)) |>
@@ -38,4 +38,4 @@ models_table <- model_set |>
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
-save(models_table, file = here("02_attempt/results/models_table.rda"))
+save(models_table_2, file = here("02_attempt/results/models_table_2.rda"))
