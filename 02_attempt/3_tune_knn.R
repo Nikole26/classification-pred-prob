@@ -17,10 +17,10 @@ num.cores <- detectCores(logical = TRUE)
 registerDoParallel(cores = num.cores/2)
 
 # load resamples ----
-load(here("data/air_bnb_folds.rda"))
+load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("01_attempt/recipes/recipe_1.rda"))
+load(here("02_attempt/recipes/recipe_2.rda"))
 
 # model specifications ----
 knn_model <-
@@ -32,7 +32,7 @@ knn_model <-
 knn_wflow <- 
   workflow() |>
   add_model(knn_model) |>
-  add_recipe(recipe_1)
+  add_recipe(recipe_2)
 
 # hyperparameter tuning values ----
 # check ranges for hyperparameters
