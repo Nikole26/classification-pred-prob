@@ -20,7 +20,7 @@ registerDoParallel(cores = num.cores)
 load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("02_attempt/recipes/recipe_2.rda"))
+load(here("02_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 mars_spec <- mars(
@@ -34,7 +34,7 @@ mars_spec <- mars(
 mars_wflow <-
   workflow() |>
   add_model(mars_spec) |>
-  add_recipe(recipe_2)
+  add_recipe(recipe_1)
 
 # hyperparameter tuning values ----
 mars_params <- hardhat::extract_parameter_set_dials(mars_spec) |>
@@ -51,7 +51,7 @@ mars_grid <- grid_regular(
 )
 
 # tuning code in here
-tune_mars_2 <- tune_grid(
+tune_mars_1 <- tune_grid(
   mars_wflow,
   resamples = air_bnb_folds,
   grid = mars_grid,
@@ -60,6 +60,6 @@ tune_mars_2 <- tune_grid(
 
 # write out results (fitted/trained workflows & runtime info) ----
 save(
-  tune_mars_2,
-  file = here("02_attempt/results/tune_mars_2.rda")
+  tune_mars_1,
+  file = here("02_attempt/results/tune_mars_1.rda")
 )

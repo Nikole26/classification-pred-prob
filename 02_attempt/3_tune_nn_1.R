@@ -20,7 +20,7 @@ registerDoParallel(cores = num.cores)
 load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("02_attempt/recipes/recipe_2.rda"))
+load(here("02_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 nn_model <- mlp(
@@ -34,14 +34,14 @@ nn_model <- mlp(
 nn_wflow <-
   workflow() |>
   add_model(nn_model) |>
-  add_recipe(recipe_2)
+  add_recipe(recipe_1)
 
 # hyperparameter tuning values ----
 nn_params <- extract_parameter_set_dials(nn_model)
 nn_grid <- grid_regular(nn_params, levels = 5)
 
 # tuning code in here
-nn_tune_2 <- tune_grid(
+nn_tune_1 <- tune_grid(
   nn_wflow,
   resamples = air_bnb_folds,
   grid = nn_grid,
@@ -50,6 +50,6 @@ nn_tune_2 <- tune_grid(
 
 # write out results (fitted/trained workflows & runtime info) ----
 save(
-  nn_tune_2,
-  file = here("02_attempt/results/nn_tune_2.rda")
+  nn_tune_1,
+  file = here("02_attempt/results/nn_tune_1.rda")
 )

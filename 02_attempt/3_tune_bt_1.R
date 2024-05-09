@@ -22,7 +22,7 @@ registerDoParallel(cores = num.cores/2)
 load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("02_attempt/recipes/recipe_2.rda"))
+load(here("02_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 bt_model <- boost_tree(mode = "classification", 
@@ -35,7 +35,7 @@ bt_model <- boost_tree(mode = "classification",
 bt_wflow <- 
   workflow() |>
   add_model(bt_model) |>
-  add_recipe(recipe_2)
+  add_recipe(recipe_1)
 
 # hyperparameter tuning values ----
 # check ranges for hyperparameters
@@ -51,10 +51,10 @@ bt_grid <- grid_regular(bt_params, levels = 5)
 # fit workflows/models ----
 #set seed
 set.seed(712)
-bt_tuned_2 <- tune_grid(bt_wflow,
+bt_tune_1 <- tune_grid(bt_wflow,
                         air_bnb_folds,
                         grid = bt_grid,
                         control = control_grid(save_workflow = TRUE))
 
 # write out results (fitted/trained workflows) ----
-save(bt_tuned_2, file = "results/bt_tuned_2.rda")
+save(bt_tune_1, file = "02_attempt/results/bt_tuned_1.rda")

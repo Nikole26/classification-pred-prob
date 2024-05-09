@@ -20,7 +20,7 @@ registerDoParallel(cores = num.cores/2)
 load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("02_attempt/recipes/recipe_2.rda"))
+load(here("02_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 knn_model <-
@@ -32,7 +32,7 @@ knn_model <-
 knn_wflow <- 
   workflow() |>
   add_model(knn_model) |>
-  add_recipe(recipe_2)
+  add_recipe(recipe_1)
 
 # hyperparameter tuning values ----
 # check ranges for hyperparameters
@@ -45,12 +45,12 @@ knn_grid <- grid_regular(knn_params, levels = 5)
 
 # fit workflows/models ----
 set.seed(7026)
-knn_tune_2 <- tune_grid(knn_wflow,
+knn_tune_1 <- tune_grid(knn_wflow,
                        air_bnb_folds,
                        grid = knn_grid,
                        control = control_grid(save_workflow = TRUE))
 
 
 # write out results (fitted/trained workflows) ----
-save(knn_tune_2, 
-     file = here("02_attempt/results/knn_tune_2.rda"))
+save(knn_tune_1, 
+     file = here("02_attempt/results/knn_tune_1.rda"))

@@ -20,7 +20,7 @@ registerDoParallel(cores = num.cores/2)
 load(here("02_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("02_attempt/recipes/recipe_2.rda"))
+load(here("02_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 rf_model <-
@@ -36,7 +36,7 @@ rf_model <-
 rf_wflow <- 
   workflow() |>
   add_model(rf_model) |>
-  add_recipe(recipe_2)
+  add_recipe(recipe_1)
 
 # hyperparameter tuning values ----
 # check ranges for hyperparameters
@@ -52,12 +52,12 @@ rf_grid <- grid_regular(rf_params, levels = 5)
 
 # fit workflows/models ----
 set.seed(6435)
-rf_tune_2 <- tune_grid(rf_wflow,
+rf_tune_1 <- tune_grid(rf_wflow,
                         air_bnb_folds,
                         grid = rf_grid,
                         control = control_grid(save_workflow = TRUE))
 
 # write out results (fitted/trained workflows) ----
 save(
-  rf_tune_2,
-  file = here("02_attempt/results/rf_tune_2.rda"))
+  rf_tune_1,
+  file = here("02_attempt/results/rf_tune_1.rda"))
