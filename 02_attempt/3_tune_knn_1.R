@@ -44,7 +44,7 @@ knn_params <- parameters(knn_model) |>
 knn_grid <- grid_regular(knn_params, levels = 5)
 
 # fit workflows/models ----
-set.seed(7026)
+set.seed(3456)
 knn_tune_1 <- tune_grid(knn_wflow,
                        air_bnb_folds,
                        grid = knn_grid,

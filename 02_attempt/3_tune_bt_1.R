@@ -57,4 +57,4 @@ bt_tune_1 <- tune_grid(bt_wflow,
                         control = control_grid(save_workflow = TRUE))
 
 # write out results (fitted/trained workflows) ----
-save(bt_tune_1, file = "02_attempt/results/bt_tuned_1.rda")
+save(bt_tune_1, file = here("02_attempt/results/bt_tune_1.rda"))
