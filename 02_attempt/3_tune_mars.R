@@ -51,6 +51,7 @@ mars_grid <- grid_regular(
 )
 
 # tuning code in here
+set.seed(685)
 tune_mars_2 <- tune_grid(
   mars_wflow,
   resamples = air_bnb_folds,
