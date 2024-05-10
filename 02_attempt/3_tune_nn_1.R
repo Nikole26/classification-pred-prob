@@ -41,6 +41,7 @@ nn_params <- extract_parameter_set_dials(nn_model)
 nn_grid <- grid_regular(nn_params, levels = 5)
 
 # tuning code in here
+set.seed(712)
 nn_tune_1 <- tune_grid(
   nn_wflow,
   resamples = air_bnb_folds,
