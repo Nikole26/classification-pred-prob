@@ -102,8 +102,8 @@ testing_data <- air_bnb_test_data |>
   select (-c(bathrooms_text, host_neighbourhood, host_since, last_review, first_review, host_location))
 
 # Save out Cleaned Data
-save(training_data, file = here("data/training_data.rda"))
-save(testing_data, file = here("data/testing_data.rda"))
+save(training_data, file = here("03_attempt/data/training_data.rda"))
+save(testing_data, file = here("03_attempt/data/testing_data.rda"))
        
 
 
