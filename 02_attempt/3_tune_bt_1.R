@@ -52,9 +52,10 @@ bt_grid <- grid_regular(bt_params, levels = 5)
 #set seed
 set.seed(712)
 bt_tune_1 <- tune_grid(bt_wflow,
-                        air_bnb_folds,
-                        grid = bt_grid,
-                        control = control_grid(save_workflow = TRUE))
+                       air_bnb_folds,
+                       grid = bt_grid,
+                       metric = roc_auc,
+                       control = control_grid(save_workflow = TRUE))
 
 # write out results (fitted/trained workflows) ----
 save(bt_tune_1, file = here("02_attempt/results/bt_tune_1.rda"))
