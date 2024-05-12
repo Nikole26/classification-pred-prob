@@ -19,11 +19,9 @@ load(here("03_attempt/results/rf_tune_1.rda"))
 # comparison table
 model_set <-
   as_workflow_set(
-    #"mars_1" = tune_mars_1,
     "nn_1" = nn_tune_1,
     "knn_1" = knn_tune_1,
     "rf_1" = rf_tune_1
-    #"bt_1" = bt_tune_1
   )
 
 models_table_1 <- model_set |> 
