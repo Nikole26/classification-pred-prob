@@ -23,12 +23,14 @@ recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
 
 # Recipe 2
 recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
-  step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year) |>
-  step_impute_mean(host_response_rate, host_acceptance_rate) |>
+  step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year, 
+          host_has_profile_pic, host_identity_verified, has_availability, instant_bookable, 
+          longitude, latitude, reviews_per_month) |>
+  step_impute_knn(all_numeric_predictors(), neighbors = 5) |>
   step_impute_mode(all_nominal_predictors()) |>
   step_dummy(all_nominal_predictors()) |> 
-  step_nzv(all_numeric_predictors()) |>
   step_corr(all_predictors(), threshold = 0.7) |>
+  step_nzv(all_numeric_predictors()) |>
   step_normalize(all_numeric_predictors())
 
 recipe_2 |>
