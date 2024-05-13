@@ -10,7 +10,7 @@ library(here)
 tidymodels_prefer()
 
 # load data
-#load(here("03_attempt/results/tune_mars_1.rda"))
+load(here("03_attempt/results/tune_mars_1.rda"))
 load(here("03_attempt/results/nn_tune_1.rda"))
 load(here("03_attempt/results/knn_tune_1.rda"))
 load(here("03_attempt/results/rf_tune_1.rda"))
@@ -21,7 +21,8 @@ model_set <-
   as_workflow_set(
     "nn_1" = nn_tune_1,
     "knn_1" = knn_tune_1,
-    "rf_1" = rf_tune_1
+    "rf_1" = rf_tune_1,
+    "mars_1" = tune_mars_1
   )
 
 models_table_1 <- model_set |> 
@@ -32,7 +33,7 @@ models_table_1 <- model_set |>
   slice_max(mean, with_ties = FALSE) |>
   select(wflow_id, roc_auc = mean, std_err, n, model) |>
   ungroup() |>
-  mutate(recipe = c("recipe 1", "recipe 1", "recipe 1")) |> 
+  mutate(recipe = c("recipe 1", "recipe 1", "recipe 1","recipe 1")) |> 
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 

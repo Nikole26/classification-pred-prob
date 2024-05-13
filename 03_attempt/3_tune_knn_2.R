@@ -39,12 +39,12 @@ knn_wflow <-
 hardhat::extract_parameter_set_dials(knn_model)
 # change hyperparameter ranges
 knn_params <- parameters(knn_model) |>
-  update(neighbors = neighbors(range = c(5, 15))) 
+  update(neighbors = neighbors(range = c(10, 20))) 
 # build tuning grid
 knn_grid <- grid_regular(knn_params, levels = 5)
 
 # fit workflows/models ----
-set.seed(3465)
+set.seed(3455)
 knn_tune_2 <- tune_grid(knn_wflow,
                        air_bnb_folds,
                        grid = knn_grid,
