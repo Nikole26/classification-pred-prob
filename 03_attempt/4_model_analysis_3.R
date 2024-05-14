@@ -39,4 +39,4 @@ models_table_3 <- model_set |>
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
-save(models_table_2, file = here("03_attempt/results/models_table_2.rda"))
+save(models_table_3, file = here("03_attempt/results/models_table_3.rda"))
