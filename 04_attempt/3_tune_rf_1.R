@@ -17,10 +17,10 @@ num.cores <- detectCores(logical = TRUE)
 registerDoParallel(cores = num.cores/2)
 
 # load resamples ----
-load(here("03_attempt/data/air_bnb_folds.rda"))
+load(here("04_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("03_attempt/recipes/recipe_1.rda"))
+load(here("04_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 rf_model <-
@@ -44,8 +44,8 @@ hardhat::extract_parameter_set_dials(rf_model)
 
 # change hyperparameter ranges
 rf_params <- parameters(rf_model) |>
-  update(mtry = mtry(c(10, 20)),
-         min_n = min_n(c(3, 10))) 
+  update(mtry = mtry(c(10, 25)),
+         min_n = min_n(c(1, 5))) 
 
 # build tuning grid
 rf_grid <- grid_regular(rf_params, levels = 5)
@@ -60,4 +60,4 @@ rf_tune_1 <- tune_grid(rf_wflow,
 # write out results (fitted/trained workflows) ----
 save(
   rf_tune_1,
-  file = here("03_attempt/results/rf_tune_1.rda"))
+  file = here("04_attempt/results/rf_tune_1.rda"))
