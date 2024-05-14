@@ -1,4 +1,17 @@
-# training data tidy-----
+#### Initial Cleaning
+
+# Load package(s) 
+library(tidymodels)
+library(tidyverse)
+library(here)
+
+#Loading data-------
+air_bnb_data <- read_csv(here("data/train_classification.csv"),
+                         col_types = cols(id = col_character()))
+air_bnb_dictionary <- readxl::read_excel(here("data/data_dictionary.xlsx"))
+air_bnb_test_data <- read_csv(here("data/test_classification.csv"),
+                              col_types = cols(id = col_character()))
+
 # training data tidy-----
 training_data <- air_bnb_data |>
   mutate(
@@ -58,6 +71,3 @@ testing_data <- air_bnb_test_data |>
 save(training_data, file = here("03_attempt/data/training_data.rda"))
 save(testing_data, file = here("03_attempt/data/testing_data.rda"))
        
-
-
-
