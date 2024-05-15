@@ -31,9 +31,27 @@ recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
   step_normalize(all_numeric_predictors())
 
-recipe_1 |>
+# Recipe 2
+recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
+  step_mutate(host_has_profile_pic = factor(host_has_profile_pic, levels = c(FALSE, TRUE)),
+              host_identity_verified = factor(host_identity_verified, levels = c(FALSE, TRUE))) |>
+  step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year, 
+          has_availability, instant_bookable, 
+          longitude, latitude, reviews_per_month, neighbourhood_cleansed, property_type, room_type,
+          availability_30, availability_60, availability_90, availability_365,
+          bathrooms, minimum_nights, maximum_nights, minimum_maximum_nights, maximum_maximum_nights)|>
+  step_impute_mean(all_numeric_predictors()) |>
+  step_impute_mode(all_nominal_predictors()) |>
+  step_mutate(host_listings_ratio = host_listings_count / host_total_listings_count) |>
+  step_rm(host_listings_count, host_total_listings_count) |>
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
+  step_nzv(all_numeric_predictors()) |>
+  step_normalize(all_numeric_predictors())
+
+recipe_2 |>
   prep() |>
   bake(new_data = NULL) |>
   glimpse()
 
 save(recipe_1, file = here("05_attempt/recipes/recipe_1.rda"))
+save(recipe_2, file = here("05_attempt/recipes/recipe_2.rda"))

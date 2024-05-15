@@ -13,7 +13,7 @@ tidymodels_prefer()
 load(here("04_attempt/results/tune_mars_1.rda"))
 load(here("04_attempt/results/nn_tune_1.rda"))
 load(here("05_attempt/results/knn_tune_1.rda"))
-load(here("04_attempt/results/rf_tune_1.rda"))
+load(here("05_attempt/results/rf_tune_1.rda"))
 #load(here("03_attempt/results/bt_tune_1.rda"))
 
 # comparison table
@@ -21,7 +21,7 @@ model_set <-
   as_workflow_set(
     #"nn_1" = nn_tune_1,
     "knn_1" = knn_tune_1,
-    #"rf_1" = rf_tune_1,
+    "rf_1" = rf_tune_1,
     #"mars_1" = tune_mars_1
   )
 
