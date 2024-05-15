@@ -48,10 +48,22 @@ recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
   step_nzv(all_numeric_predictors()) |>
   step_normalize(all_numeric_predictors())
 
-recipe_2 |>
+# Recipe 3 - focused on random trees
+recipe_rf_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
+  step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year, 
+          host_has_profile_pic, host_identity_verified, has_availability, instant_bookable, 
+          longitude, latitude, reviews_per_month, neighbourhood_cleansed, property_type, room_type,
+          availability_30, availability_60, availability_90, availability_365) |>
+  step_impute_mean(all_numeric_predictors()) |>
+  step_impute_mode(all_nominal_predictors()) |>
+  step_nzv(all_numeric_predictors()) |>
+  step_normalize(all_numeric_predictors())
+
+recipe_rf_1 |>
   prep() |>
   bake(new_data = NULL) |>
   glimpse()
 
 save(recipe_1, file = here("05_attempt/recipes/recipe_1.rda"))
 save(recipe_2, file = here("05_attempt/recipes/recipe_2.rda"))
+save(recipe_rf_1, file = here("05_attempt/recipes/recipe_rf_1.rda"))
