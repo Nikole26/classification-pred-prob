@@ -26,9 +26,11 @@ recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
   step_nzv(all_numeric_predictors()) |>
   step_normalize(all_numeric_predictors())
 
-# Recipe 1
+# Recipe 2
 recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
-  step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year, 
+  step_mutate(host_listings_ratio = host_listings_count / host_total_listings_count) |>
+  step_rm(host_listings_count, host_total_listings_count,id, 
+          host_verifications, host_response_time, beds, first_review_year, last_review_year, 
           host_has_profile_pic, host_identity_verified, has_availability, instant_bookable, 
           longitude, latitude, reviews_per_month, neighbourhood_cleansed, property_type, room_type,
           availability_30, availability_60, availability_90, availability_365,
