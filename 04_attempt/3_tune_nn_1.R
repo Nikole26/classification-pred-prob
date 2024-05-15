@@ -17,10 +17,10 @@ num.cores <- detectCores((logical = TRUE)/2)
 registerDoParallel(cores = num.cores)
 
 # load resamples ----
-load(here("03_attempt/data/air_bnb_folds.rda"))
+load(here("04_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("03_attempt/recipes/recipe_1.rda"))
+load(here("04_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 nn_model <- mlp(
@@ -52,5 +52,5 @@ nn_tune_1 <- tune_grid(
 # write out results (fitted/trained workflows & runtime info) ----
 save(
   nn_tune_1,
-  file = here("03_attempt/results/nn_tune_1.rda")
+  file = here("04_attempt/results/nn_tune_1.rda")
 )

@@ -26,7 +26,7 @@ recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
   step_normalize(all_numeric_predictors()) 
 
 # Recipe 2
-recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
+recipe_2 <- recipe(host_is_superhost ~ ., data = training_dat|a) |>
   step_rm(id, host_verifications, host_response_time, beds, first_review_year, last_review_year, 
           host_has_profile_pic, host_identity_verified, has_availability, instant_bookable, 
           longitude, latitude, reviews_per_month, neighbourhood_cleansed, property_type, room_type) |>

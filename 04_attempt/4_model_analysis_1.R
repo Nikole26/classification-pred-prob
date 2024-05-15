@@ -10,10 +10,10 @@ library(here)
 tidymodels_prefer()
 
 # load data
-load(here("03_attempt/results/tune_mars_1.rda"))
-load(here("03_attempt/results/nn_tune_1.rda"))
-load(here("03_attempt/results/knn_tune_1.rda"))
-load(here("03_attempt/results/rf_tune_1.rda"))
+load(here("04_attempt/results/tune_mars_1.rda"))
+load(here("04_attempt/results/nn_tune_1.rda"))
+load(here("04_attempt/results/knn_tune_1.rda"))
+load(here("04_attempt/results/rf_tune_1.rda"))
 #load(here("03_attempt/results/bt_tune_1.rda"))
 
 # comparison table
@@ -33,8 +33,8 @@ models_table_1 <- model_set |>
   slice_max(mean, with_ties = FALSE) |>
   select(wflow_id, roc_auc = mean, std_err, n, model) |>
   ungroup() |>
-  mutate(recipe = c("recipe 1", "recipe 1", "recipe 1","recipe 1")) |> 
+  mutate(recipe = c("recipe 1")) |> 
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
-save(models_table_1, file = here("03_attempt/results/models_table_1.rda"))
+save(models_table_1, file = here("04_attempt/results/models_table_1.rda"))
