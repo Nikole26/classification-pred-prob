@@ -10,18 +10,18 @@ library(here)
 tidymodels_prefer()
 
 # load data
-load(here("05_attempt/results/tune_mars_2.rda"))
-load(here("05_attempt/results/nn_tune_2.rda"))
-load(here("05_attempt/results/knn_tune_3.rda"))
-load(here("05_attempt/results/rf_tune_2.rda"))
+#load(here("05_attempt/results/tune_mars_2.rda"))
+#load(here("05_attempt/results/nn_tune_2.rda"))
+load(here("05_attempt/results/bt_tuned_3.rda"))
+load(here("05_attempt/results/rf_tune_3.rda"))
 #load(here("03_attempt/results/bt_tune_1.rda"))
 
 # comparison table
 model_set <-
   as_workflow_set(
     #"nn_2" = nn_tune_2,
-    "knn_3" = knn_tune_3,
-    #"rf_2" = rf_tune_2,
+    "bt_3" = bt_tuned_3,
+    "rf_3" = rf_tune_3,
     #"mars_2" = tune_mars_2
   )
 
