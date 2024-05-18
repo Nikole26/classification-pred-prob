@@ -38,7 +38,7 @@ training_data <- air_bnb_data |>
     first_review = year(first_review),
     first_review_year = factor(first_review - 0)) |>
   
-  select(-c(bathrooms_text, host_neighbourhood, host_since, last_review, first_review, host_location))
+  select(-c(bathrooms_text, host_neighbourhood, host_since, last_review, first_review))
 
 # testing data tidy-------
 testing_data <- air_bnb_test_data |>
@@ -57,11 +57,11 @@ testing_data <- air_bnb_test_data |>
        first_review = year(first_review),
        first_review_year = factor(first_review - 0)) |>
   
-  select (-c(bathrooms_text, host_neighbourhood, host_since, last_review, first_review, host_location))
+  select (-c(bathrooms_text, host_neighbourhood, host_since, last_review, first_review))
 
 # Save out Cleaned Data
-save(training_data, file = here("07_attempt/data/training_data.rda"))
-save(testing_data, file = here("07_attempt/data/testing_data.rda"))
+save(training_data, file = here("08_attempt/data/training_data.rda"))
+save(testing_data, file = here("08_attempt/data/testing_data.rda"))
        
 
 

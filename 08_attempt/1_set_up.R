@@ -10,11 +10,11 @@ library(here)
 tidymodels_prefer()
 
 # read in training data -------
-load(here("07_attempt/data/training_data.rda"))
+load(here("08_attempt/data/training_data.rda"))
 
 # create resamples (10-fold cv with 4 repeats) ----------
-set.seed(1123)
+set.seed(121)
 air_bnb_folds <- training_data |>
   vfold_cv(v = 10, repeats = 5, host_is_superhost)
 
-save(air_bnb_folds, file = here("07_attempt/data/air_bnb_folds.rda"))
+save(air_bnb_folds, file = here("08_attempt/data/air_bnb_folds.rda"))

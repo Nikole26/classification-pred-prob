@@ -10,8 +10,8 @@ library(here)
 tidymodels_prefer()
 
 # load data
-load(here("07_attempt/results/rf_tune_1.rda"))
-load(here("07_attempt/results/bt_tune_1.rda"))
+load(here("08_attempt/results/rf_tune_1.rda"))
+load(here("08_attempt/results/bt_tune_1.rda"))
 
 # comparison table
 model_set <-
@@ -32,4 +32,4 @@ models_table_1 <- model_set |>
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
-save(models_table_1, file = here("07_attempt/results/models_table_1.rda"))
+save(models_table_1, file = here("08_attempt/results/models_table_1.rda"))
