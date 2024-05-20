@@ -36,7 +36,6 @@ recipe_2 <- recipe(host_is_superhost ~ ., data = training_data) |>
           availability_30, availability_60, availability_90, availability_365) |>
   step_impute_mean(all_numeric_predictors()) |>
   step_impute_mode(all_nominal_predictors()) |>
-  step_impute_knn(host_location, impute_with = imp_vars(review_scores_location)) |>
   step_impute_linear(review_scores_rating, impute_with = imp_vars(review_scores_cleanliness, review_scores_communication,
                                                                   review_scores_accuracy, review_scores_checkin, 
                                                                   review_scores_location, review_scores_value)) |>
@@ -53,4 +52,4 @@ recipe_2 |>
   glimpse()
 
 save(recipe_1, file = here("08_attempt/recipes/recipe_1.rda"))
-save(recipe_2, file = here("08_attempt/recipes/recipe_1.rda"))
+save(recipe_2, file = here("08_attempt/recipes/recipe_2.rda"))
