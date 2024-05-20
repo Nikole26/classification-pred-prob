@@ -44,14 +44,14 @@ hardhat::extract_parameter_set_dials(rf_model)
 
 # change hyperparameter ranges
 rf_params <- parameters(rf_model) |>
-  update(mtry = mtry(c(15,40)),
-         min_n = min_n(c(-3, 3))) 
+  update(mtry = mtry(c(15, 45)),
+         min_n = min_n(c(1, 5))) 
 
 # build tuning grid
 rf_grid <- grid_regular(rf_params, levels = 5)
 
 # fit workflows/models ----
-set.seed(140)
+set.seed(1623)
 rf_tune_1 <- tune_grid(rf_wflow,
                         air_bnb_folds,
                         grid = rf_grid,

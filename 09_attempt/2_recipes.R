@@ -12,7 +12,7 @@ library(car)
 tidymodels_prefer()
 
 # loading training data -------
-load(here("07_attempt/data/training_data.rda"))
+load(here("09_attempt/data/training_data.rda"))
 
 # Recipe 1
 recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
@@ -22,9 +22,9 @@ recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>
           availability_30, availability_60, availability_90, availability_365) |>
   step_impute_mean(all_numeric_predictors()) |>
   step_impute_mode(all_nominal_predictors()) |>
+  step_impute_knn(all_predictors()) |>
   step_other(all_nominal_predictors(), threshold = 0.05) |>
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
-  step_impute_knn(all_predictors()) |>
   step_nzv(all_numeric_predictors()) |>
   step_normalize(all_numeric_predictors())
 
