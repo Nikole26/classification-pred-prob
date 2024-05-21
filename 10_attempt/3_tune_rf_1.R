@@ -17,15 +17,15 @@ num.cores <- detectCores(logical = TRUE)
 registerDoParallel(cores = num.cores/2)
 
 # load resamples ----
-load(here("09_attempt/data/air_bnb_folds.rda"))
+load(here("10_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
-load(here("09_attempt/recipes/recipe_1.rda"))
+load(here("10_attempt/recipes/recipe_1.rda"))
 
 # model specifications ----
 rf_model <-
   rand_forest(
-    trees = 1500, 
+    trees = 1000, 
     min_n = tune(),
     mtry = tune()
   ) |>
@@ -60,4 +60,4 @@ rf_tune_1 <- tune_grid(rf_wflow,
 # write out results (fitted/trained workflows) ----
 save(
   rf_tune_1,
-  file = here("09_attempt/results/rf_tune_1.rda"))
+  file = here("10_attempt/results/rf_tune_1.rda"))

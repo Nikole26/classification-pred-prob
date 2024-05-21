@@ -10,8 +10,8 @@ library(here)
 tidymodels_prefer()
 
 # load data
-load(here("09_attempt/results/rf_tune_1.rda"))
-load(here("09_attempt/results/bt_tune_1.rda"))
+load(here("10_attempt/results/rf_tune_1.rda"))
+load(here("10_attempt/results/bt_tune_1.rda"))
 
 # comparison table
 model_set <-
