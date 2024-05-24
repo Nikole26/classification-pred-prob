@@ -39,7 +39,7 @@ library(gtExtras)
 ```
 
 # Introduction
-The project objective is to develop a predictive model to determine the likelihood of small businesses or start-ups having their loan applications approved by the U.S. Small Business Administration (SBA). This predictive model focuses on classifying loan applications into two categories: 'Approved' and 'Rejected,' utilizing the dependent variable loan status, which indicates if the loan is either 'Charged Off' or 'Paid in Full'. The dataset was sourced from Kaggle, and this report presents key insights and findings. 
+The objective of this project is to develop a predictive model to determine the likelihood that a host is a superhost in the Airbnb dataset. This is a classification problem, with the target variable being `host_is_superhost`. The dataset was sourced from Kaggle, and this report aims to present key insights and findings derived from the analysis.
 
 # Main Insights and Findings
 
@@ -52,38 +52,88 @@ The project objective is to develop a predictive model to determine the likeliho
 In our first submission, both model and recipe were formed from a starting point. The best model that performed out of Random forest, Neirest Neighboor, Mars and Nn,
 
 ```{r}
+#| label: fig-results-attempt-1
+#| fig-cap: Models' Results using initial basic recipe (Recipe 1)
 #| echo: false
 load(here("01_attempt/results/models_table.rda"))
-models_table
+models_table |>
+  kableExtra::kable()
 ```
 
-Out of this models, the best model is Random Forest which gave an ROC of 0.9480770, and when submitted to Kaggle the ROC was of 0.94412.
+Out of this models, as seen in @fig-results-attempt-1, the best model is Random Forest which gave an ROC of 0.9480770, and when submitted to Kaggle the ROC was of 0.94412.
 
 This ROC by the Random Forest was achieved by using a simple starting recipe that included several preprocessing steps, which are briefly explained below: 
 
-* 1. Imputation by Mean for Numeric Predictors: Missing values in numeric predictors were imputed using the mean value of each predictor.
+ 1. Imputation by Mean for Numeric Predictors: Missing values in numeric predictors were imputed using the mean value of each predictor.
 
-* 2. Imputation by Mode for Nominal Predictors: Missing values in nominal predictors were imputed using the most frequent value (mode) of each predictor.
+ 2. Imputation by Mode for Nominal Predictors: Missing values in nominal predictors were imputed using the most frequent value (mode) of each predictor.
 
-* 3. Dummy Encoding for Nominal Predictors: Nominal predictors were converted into dummy variables, which allows categorical data to be used in the model.
+ 3. Dummy Encoding for Nominal Predictors: Nominal predictors were converted into dummy variables, which allows categorical data to be used in the model.
 
-* 4. Near-Zero Variance Filter for Numeric Predictors: Numeric predictors with near-zero variance (those that have very little variation and hence are not useful for the model) were removed.
+ 4. Near-Zero Variance Filter for Numeric Predictors: Numeric predictors with near-zero variance (those that have very little variation and hence are not useful for the model) were removed.
 
-* 5. Normalization for Numeric Predictors: Numeric predictors were normalized to have a mean of zero and a standard deviation of one, which helps in improving the performance of many machine learning algorithms.
+ 5. Normalization for Numeric Predictors: Numeric predictors were normalized to have a mean of zero and a standard deviation of one, which helps in improving the performance of many machine learning algorithms.
 
-Also regarding the best hyperparameters, for Random forest as seen in FIGURE, for `mtry` the higher the better and for `min_n` the lower the better. 
+Also regarding the best hyperparameters, for Random forest as seen in @fig-hyperparameters-attempt-1, for `mtry` the higher the better and for `min_n` the lower the better. 
 
 ```{r}
+#| label: fig-hyperparameters-attempt-1
+#| fig-cap: Hyperparameters Autoplot for Random Forest
+#| echo: false
 load(here("01_attempt/results/rf_autplot.rda"))
 rf_autplot
 ```
 
 ### Boost Tree (Attempt 10)
-In 
 
+This tenth submission included major improvements to the recipe and model. There were two recipes employed; recipe 2 was the more intricate and effective one. The random forest and boosted tree models were both used with this mixture. After numerous attempts, these two models consistently produced the greatest results, so I decided to concentrate on them.
 
-**How we got to attempt 10?**
-This improvement was achieved by a better recipe and engine `lightb` from the which `xgboost` was used in previous attemps 
+```{r}
+#| label: fig-results-attempt-10
+#| fig-cap: Models' Results using initial basic recipe (Recipe 1)
+#| echo: false
+load(here("10_attempt/results/models_table_2.rda"))
+models_table_2 |>
+  kableExtra::kable()
+```
 
+Out of this two models, as seen in @fig-results-attempt-10, the best model is Boost Tree which gave an ROC of 0.9617760, and when submitted to Kaggle the ROC was of 0.95602.
 
+The improvement in the model's perfomantece is partly due to the recipe. Even though same preprocessing steps as the initial steps were used, some were added in order to redefine the model's performance. Those steps are explained briefly below:
+
+ 1. Removing Unnecessary Variables: Variables like id, host_verifications, host_response_time, first_review_year, and last_review_year were removed because some of them were character variables that would potentially not have a substantial impact on predicting the target variable and could introduce noise. It is important to note that in some of my previous attempts, I incorrectly removed too many variables, aiming to keep only the main variables. However, after observing the different performances of the models and trying different recipes, I realized that while some variables might not directly impact the target variable host_is_superhost, they still have some influence. Thus, in the end, I focused on removing only the least significant variables for predicting the target variable.
+
+ 2. K-Nearest Neighbors (KNN) Imputation: In addition to mean and mode imputation, KNN imputation was applied to all predictors. By taking into account the values of the closest neighbors, this approach fills in missing values and may increase imputation accuracy.
+
+ 3. Novel Level Handling: To make sure the model can handle new categories during prediction, this step introduced a new level for any categorical levels that weren't seen in the training data.
+
+ 4. Unknown Level Handling: This step improved the management of missing data by substituting a new "unknown" category for missing values in nominal predictors.
+
+ 5. Collapsing Rare Levels: This step assisted    to prevent overfitting and reduce model complexity by grouping uncommon levels of nominal predictors into a single "other" category if they fall below a predetermined threshold (5% in this case).
+
+ 6. One-Hot Encoding: Unlike the initial recipe, one-hot encoding was used for nominal predictors. This ensures that each category is represented as a distinct binary variable, which is advantageous for some models that favor this structure above conventional dummy variables. 
+
+**How we get to this model improvement?**
+
+This improvement was achieved by using a better preprocessing recipe and switching to the lightgbm engine, whereas xgboost was used in previous attempts. Additionally, in previous attempts, I utilized the `select_best` function along with `autoplot` to determine the best parameters and continually refine their ranges.
+
+Switching to lightgbm offered several advantages:
+
+* Speed and Efficiency: It is made to be faster and more effective, utilizing methods like decision tree learning based on histograms to simplify and expedite the training process.
+
+* Scalability: It can process huge datasets more effectively, which makes it appropriate for real-world applications with substantial data volumes and high-dimensional characteristics.
+
+* Accuracy: Because of its sophisticated optimization methods and capacity to properly manage overfitting, it frequently produces results with higher accuracy. It makes use of Leaf-wise (Best-first) tree growth, which can result in more precise and profound trees.
+
+Indeed, regarding the best hyperparameters for Boost Tree as seen in @fig-hyperparameters-attempt-10, for `mtry` the higher the better, `min_n` and `learn_rate` 
+
+```{r}
+#| label: fig-hyperparameters-attempt-10
+#| fig-cap: Hyperparameters Autoplot for Boost Tree
+#| echo: false
+load(here("10_attempt/results/bt_autoplot.rda"))
+bt_autoplot
+```
+
+# Conclusion
 
