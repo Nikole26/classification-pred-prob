@@ -45,3 +45,9 @@ models_table <- model_set |>
   arrange(desc(roc_auc))
 
 save(models_table, file = here("01_attempt/results/models_table.rda"))
+
+rf_autplot <- autoplot(rf_tune_1, metric = "roc_auc") +
+  theme_minimal()
+
+save(models_table, file = here("01_attempt/results/models_table.rda"))
+save(rf_autplot, file = here("01_attempt/results/rf_autplot.rda"))

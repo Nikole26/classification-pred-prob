@@ -1,0 +1,89 @@
+---
+title: "Classification Problem Memo"
+subtitle: |
+  | Prediction Prblems 
+  | Data Science 3 with R (STAT 301-3)
+author: "Nikole Montero Cervantes"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+
+from: markdown+emoji 
+reference-location: margin
+citation-location: margin
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[https://github.com/stat301-3-2024-spring/classification-pred-prob-Nikole26.git](https://github.com/stat301-3-2024-spring/classification-pred-prob-Nikole26.git)
+
+:::
+
+
+```{r}
+#| label: loading-packages-and-data
+#| echo: false
+library(tidyverse)
+library(here)
+library(gt)
+library(gtExtras)
+```
+
+# Introduction
+The project objective is to develop a predictive model to determine the likelihood of small businesses or start-ups having their loan applications approved by the U.S. Small Business Administration (SBA). This predictive model focuses on classifying loan applications into two categories: 'Approved' and 'Rejected,' utilizing the dependent variable loan status, which indicates if the loan is either 'Charged Off' or 'Paid in Full'. The dataset was sourced from Kaggle, and this report presents key insights and findings. 
+
+# Main Insights and Findings
+
+## Cleaning and EDA
+
+
+## Models/Submissions Assesment
+
+### Random Forest (Attempt 1)
+In our first submission, both model and recipe were formed from a starting point. The best model that performed out of Random forest, Neirest Neighboor, Mars and Nn,
+
+```{r}
+#| echo: false
+load(here("01_attempt/results/models_table.rda"))
+models_table
+```
+
+Out of this models, the best model is Random Forest which gave an ROC of 0.9480770, and when submitted to Kaggle the ROC was of 0.94412.
+
+This ROC by the Random Forest was achieved by using a simple starting recipe that included several preprocessing steps, which are briefly explained below: 
+
+* 1. Imputation by Mean for Numeric Predictors: Missing values in numeric predictors were imputed using the mean value of each predictor.
+
+* 2. Imputation by Mode for Nominal Predictors: Missing values in nominal predictors were imputed using the most frequent value (mode) of each predictor.
+
+* 3. Dummy Encoding for Nominal Predictors: Nominal predictors were converted into dummy variables, which allows categorical data to be used in the model.
+
+* 4. Near-Zero Variance Filter for Numeric Predictors: Numeric predictors with near-zero variance (those that have very little variation and hence are not useful for the model) were removed.
+
+* 5. Normalization for Numeric Predictors: Numeric predictors were normalized to have a mean of zero and a standard deviation of one, which helps in improving the performance of many machine learning algorithms.
+
+Also regarding the best hyperparameters, for Random forest as seen in FIGURE, for `mtry` the higher the better and for `min_n` the lower the better. 
+
+```{r}
+load(here("01_attempt/results/rf_autplot.rda"))
+rf_autplot
+```
+
+### Boost Tree (Attempt 10)
+In 
+
+
+**How we got to attempt 10?**
+This improvement was achieved by a better recipe and engine `lightb` from the which `xgboost` was used in previous attemps 
+
+
+
