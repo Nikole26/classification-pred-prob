@@ -32,12 +32,15 @@ models_table <- model_set |>
   slice_max(mean, with_ties = FALSE) |>
   select(wflow_id, roc_auc = mean, std_err, n, model) |>
   ungroup() |>
-  mutate(recipe = c("recipe 1", "recipe 1", "recipe 2", "recipe 2")) |> 
+  mutate(recipe = c("recipe 1", "recipe 2", "recipe 2", "recipe 1")) |> 
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
-bt_autoplot <- autoplot(bt_tune_2, metric = "roc_auc") +
+bt_autoplot_2 <- autoplot(bt_tune_2, metric = "roc_auc") +
+  theme_minimal()
+
+bt_autoplot_1 <- autoplot(bt_tune_1, metric = "roc_auc") +
   theme_minimal()
 
 save(models_table, file = here("10_attempt/results/models_table.rda"))
-save(bt_autoplot, file = here("10_attempt/results/bt_autoplot.rda"))
+save(bt_autoplot_2, file = here("10_attempt/results/bt_autoplot_2.rda"))

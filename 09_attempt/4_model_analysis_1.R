@@ -32,4 +32,8 @@ models_table_1 <- model_set |>
   select(-wflow_id) |>
   arrange(desc(roc_auc))
 
+bt_autoplot_1 <- autoplot(bt_tune_1, metric = "roc_auc") +
+  theme_minimal()
+
 save(models_table_1, file = here("09_attempt/results/models_table_1.rda"))
+save(bt_autoplot_1, file = here("09_attempt/results/bt_autoplot_1.rda"))
