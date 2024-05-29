@@ -37,6 +37,8 @@ library(here)
 library(gt)
 library(gtExtras)
 library(cowplot)
+library(grid)
+library(gridExtra)
 ```
 
 # Introduction
@@ -97,19 +99,7 @@ This ROC by the Random Forest was achieved by using a simple starting recipe tha
 
  8. Normalization for Numeric Predictors: Numeric predictors were normalized to have a mean of zero and a standard deviation of one, which helps in improving the performance of many machine learning algorithms.
 
-#### Engine Selection 
-
-This improvement was achieved by using a better preprocessing recipe and switching to the `lightgbm`engine, whereas `xgboost`was used in previous attempts. 
-
-Switching to `lightgbm` offered several advantages:
-
-* Speed and Efficiency: It is made to be faster and more effective, utilizing methods like decision tree learning based on histograms to simplify and expedite the training process.
-
-* Scalability: It can process huge datasets more effectively, which makes it appropriate for real-world applications with substantial data volumes and high-dimensional characteristics.
-
-* Accuracy: Because of its sophisticated optimization methods and capacity to properly manage overfitting, it frequently produces results with higher accuracy. It makes use of Leaf-wise (Best-first) tree growth, which can result in more precise and profound trees.
-
-#### Hyperparameters analysis
+#### Hyperparameters
 
 In this attempt, I continually refined the parameter ranges by selecting the best hyperparameters and plotting them based on the improvements observed in my previous attempts. 
 
@@ -140,9 +130,21 @@ The improvement in the model's performance is partly due to the recipe. Even tho
 
  3. Unknown Level Handling: This step improved the management of missing data by substituting a new "unknown" category for missing values in nominal predictors.
 
+#### Engine Selection 
+
+This improvement was achieved by using a better preprocessing recipe and switching to the `lightgbm`engine, whereas `xgboost`was used in previous attempts. 
+
+Switching to `lightgbm` offered several advantages:
+
+* Speed and Efficiency: It is made to be faster and more effective, utilizing methods like decision tree learning based on histograms to simplify and expedite the training process.
+
+* Scalability: It can process huge datasets more effectively, which makes it appropriate for real-world applications with substantial data volumes and high-dimensional characteristics.
+
+* Accuracy: Because of its sophisticated optimization methods and capacity to properly manage overfitting, it frequently produces results with higher accuracy. It makes use of Leaf-wise (Best-first) tree growth, which can result in more precise and profound trees.
+
 #### Hyperparameters 
 
-In this attempt, I continually refined the parameter ranges by selecting the best hyperparameters, with a major difference in the `learn_rate`. Attempt 10 lacks this parameter to tune compared to Attempt 9. This can be evidenced graphically through @fig-hyperparameters-attempt-12. Thus, it is possible that the inclusion of the `learn_rate` hyperparameter in the ninth attempt might have led to overfitting or other undesirable effects, reducing its performance compared to the tenth attempt.
+In this attempt, I continually refined the parameter ranges by selecting the best hyperparameters, with a major difference in the `learn_rate`. Attempt 10 lacks this parameter to tune compared to Attempt 9. This can be evidenced graphically through @fig-hyperparameters-attempt-12. Thus, it is possible that the inclusion of the `learn_rate` hyperparameter in the ninth attempt might have led to overfitting or other undesirable effects, reducing its performance compared to the tenth attempt. It should be noted that for the tenth attempt, more tuning exploration could have been done, but it wasn't since I managed to meet the benchmark with that last attempt.
 
 ```{r}
 #| label: fig-hyperparameters-attempt-12
@@ -150,7 +152,12 @@ In this attempt, I continually refined the parameter ranges by selecting the bes
 #| echo: false
 load(here("10_attempt/results/bt_autoplot_2.rda"))
 load(here("09_attempt/results/bt_autoplot_1.rda"))
-combined_plot <- plot_grid(bt_autoplot_2, bt_autoplot_1, labels = c("Attempt 09 Boosted Tree Hyperparameters", "Attempt 10 Boosted Tree Hyperparameters"))
+combined_plot <- plot_grid(
+  bt_autoplot_2 + theme(legend.position="none"),
+  bt_autoplot_1 + theme(legend.position="none"),
+  nrow = 1,  
+  rel_widths = c(1.2, 1)
+)
 combined_plot
 ```
 
