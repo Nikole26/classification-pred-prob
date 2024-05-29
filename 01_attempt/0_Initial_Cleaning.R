@@ -28,24 +28,6 @@ air_bnb_data |>
   arrange(-n) |>
   view()
 
-# Target variable distribution
-air_bnb_data |>
-ggplot(aes (x = host_is_superhost, fill = host_is_superhost) ) +
-  geom_bar () +
-  labs (y = "Count" , x = "Superhost Status") +
-  theme_classic() + theme (legend.position = "none") +
-  scale_fill_manual(values = c("darkgreen", "green"))
-
-# Check correlations-----------
-cor_matrix <- air_bnb_data |>
-  select (where(is.numeric) | where(is.logical)) |>
-  na.omit() |> 
-  cor() |>
-  as_tibble( )
-
-cor_matrix$varl <- 
-  colnames(cor_matrix)
-
 # training data tidy-----
 training_data <- air_bnb_data |>
   mutate(
