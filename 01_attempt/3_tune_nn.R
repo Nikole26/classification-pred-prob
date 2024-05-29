@@ -14,7 +14,7 @@ tidymodels_prefer()
 
 # parallel processing ----
 num.cores <- detectCores(logical = TRUE)
-registerDoParallel(cores = num.cores)
+registerDoParallel(cores = num.cores/2)
 
 # load resamples ----
 load(here("01_attempt/data/air_bnb_folds.rda"))
@@ -45,6 +45,7 @@ tic.clearlog() # clear log
 tic("nn_simple_tune: RECIPE 1") # start clock
 
 # tuning code in here
+set.seed(142)
 nn_tune_1 <- tune_grid(
   nn_wflow,
   resamples = air_bnb_folds,

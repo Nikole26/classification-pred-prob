@@ -33,6 +33,7 @@ models_table_1 <- model_set |>
   arrange(desc(roc_auc))
 
 bt_autoplot_1 <- autoplot(bt_tune_1, metric = "roc_auc") +
+  labs(title = "Attempt 09 Boosted Tree Hyperparameters") +
   theme_minimal()
 
 save(models_table_1, file = here("09_attempt/results/models_table_1.rda"))

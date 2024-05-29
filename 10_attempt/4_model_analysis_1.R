@@ -37,6 +37,7 @@ models_table <- model_set |>
   arrange(desc(roc_auc))
 
 bt_autoplot_2 <- autoplot(bt_tune_2, metric = "roc_auc") +
+  labs(title = "Attempt 10 Boosted Tree Hyperparameters") +
   theme_minimal()
 
 bt_autoplot_1 <- autoplot(bt_tune_1, metric = "roc_auc") +

@@ -13,8 +13,8 @@ library(doParallel)
 tidymodels_prefer()
 
 # parallel processing ----
-num.cores <- (detectCores(logical = TRUE)/2)
-registerDoParallel(cores = num.cores)
+num.cores <- detectCores(logical = TRUE)
+registerDoParallel(cores = num.cores/2)
 
 # load resamples ----
 load(here("01_attempt/data/air_bnb_folds.rda"))
@@ -55,6 +55,7 @@ tic.clearlog() # clear log
 tic("mars_1") # start clock
 
 # tuning code in here
+set.seed(7020)
 tune_mars_1 <- tune_grid(
   mars_wflow,
   resamples = air_bnb_folds,
