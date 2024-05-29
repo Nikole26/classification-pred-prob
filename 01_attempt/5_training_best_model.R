@@ -7,8 +7,8 @@ library(tidymodels)
 library(here)
 
 # loading necessary data
-load(here("02_attempt/results/rf_tune_1.rda"))
-load(here("02_attempt/data/training_data.rda"))
+load(here("01_attempt/results/rf_tune_1.rda"))
+load(here("01_attempt/data/training_data.rda"))
 
 # Best Model --------
 select_best(rf_tune_1, metric = "roc_auc")
@@ -23,4 +23,4 @@ set.seed(130)
 final_fit_rf_1 <-  fit(final_wflow_roc, training_data)
 
 # saving results-------
-save(final_fit_rf_1, file = here("02_attempt/results/final_fit_rf_1.rda"))
+save(final_fit_rf_1, file = here("01_attempt/results/final_fit_rf_1.rda"))

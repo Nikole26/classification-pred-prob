@@ -10,7 +10,7 @@ library(here)
 tidymodels_prefer()
 
 # loading training data -------
-load(here("data/training_data.rda"))
+load(here("01_attempt/data/training_data.rda"))
 
 # Recipe
 recipe_1 <- recipe(host_is_superhost ~ ., data = training_data) |>

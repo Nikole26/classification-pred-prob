@@ -17,7 +17,7 @@ num.cores <- detectCores(logical = TRUE)
 registerDoParallel(cores = num.cores)
 
 # load resamples ----
-load(here("data/air_bnb_folds.rda"))
+load(here("01_attempt/data/air_bnb_folds.rda"))
 
 # load preprocessing/recipe ----
 load(here("01_attempt/recipes/recipe_1.rda"))
