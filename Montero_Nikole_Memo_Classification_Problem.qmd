@@ -62,7 +62,7 @@ Finally, I decided to use a stratified k-fold cross-validation with 10 folds and
 
 # Models/Submissions Assesment
 
-## Boost tree (Attempt 9)
+## Random Forest (Attempt 9)
 
 In my ninth submission, both the model and recipe were redefined based on the insights learnt from my previous attempts. Particularly, I noticed that the best-performing models were random forest and boosted tree. Thus, I decided to work with these two models and focus on including new preprocessing steps in my recipe.
 
