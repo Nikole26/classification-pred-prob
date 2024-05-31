@@ -1,4 +1,4 @@
-# L05 Feature Engineering II ----
+# Classification Problem ----
 # Tuning for MARS FE model  ----
 
 # Load package(s) ----

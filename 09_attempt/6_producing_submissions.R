@@ -1,4 +1,4 @@
-# Final Project ----
+# Classification Problem ----
 # Assessing final model
 
 # load packages ----

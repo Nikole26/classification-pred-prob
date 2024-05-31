@@ -1,4 +1,4 @@
-# Final Project ----
+# Classification Problem ----
 # Select final model and train it
 
 # load packages ----
